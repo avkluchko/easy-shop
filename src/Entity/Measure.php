@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MeasureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MeasureRepository::class)]
 class Measure
@@ -15,6 +16,7 @@ class Measure
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 5)]
+    #[Groups(['goods:read'])]
     private ?string $name = null;
 
     public function __construct()
