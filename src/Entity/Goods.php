@@ -10,7 +10,7 @@ class Goods
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'bigint')]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
@@ -21,8 +21,8 @@ class Goods
     #[ORM\JoinColumn(name: 'id_measure', nullable: false)]
     private ?Measure $measure = null;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $hidden = false;
+    #[ORM\Column(type: 'smallint')]
+    private int $hidden = 0;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
@@ -31,7 +31,7 @@ class Goods
     private float $quantity;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private string $price;
+    private float $regprice;
 
     public function getId(): ?int
     {
@@ -64,12 +64,14 @@ class Goods
 
     public function isHidden(): bool
     {
-        return $this->hidden;
+        return $this->hidden === 1;
     }
 
-    public function setHidden(bool $hidden): void
+    public function setHidden(bool $hidden): self
     {
-        $this->hidden = $hidden;
+        $this->hidden = $hidden ? 1 : 0;
+
+        return $this;
     }
 
     public function getName(): string
@@ -77,9 +79,11 @@ class Goods
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getQuantity(): float
@@ -87,18 +91,22 @@ class Goods
         return $this->quantity;
     }
 
-    public function setQuantity(float $quantity): void
+    public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
     }
 
-    public function getPrice(): string
+    public function getRegprice(): float
     {
-        return $this->price;
+        return $this->regprice;
     }
 
-    public function setPrice(string $price): void
+    public function setRegprice(float $regprice): self
     {
-        $this->price = $price;
+        $this->regprice = $regprice;
+
+        return $this;
     }
 }
