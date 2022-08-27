@@ -2,32 +2,44 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\OrderItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    itemOperations: ['get'],
+    normalizationContext: ['groups' => 'order_item:read'],
+)]
 #[ORM\Entity(repositoryClass: OrderItemRepository::class)]
 class OrderItem
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['orders:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[Groups(['orders:read', 'order_item:read'])]
+    private string $name;
 
     #[ORM\Column]
-    private ?float $quantity = null;
+    #[Groups(['orders:read', 'order_item:read'])]
+    private float $quantity;
 
     #[ORM\Column]
-    private ?float $price = null;
+    #[Groups(['orders:read', 'order_item:read'])]
+    private float $price;
 
-    #[ORM\ManyToOne(inversedBy: 'orderItems')]
+    #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['order_item:read'])]
     private ?Order $parent = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['orders:read', 'order_item:read'])]
     private ?Goods $goods = null;
 
     public function getId(): ?int
@@ -35,7 +47,7 @@ class OrderItem
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -47,7 +59,7 @@ class OrderItem
         return $this;
     }
 
-    public function getQuantity(): ?float
+    public function getQuantity(): float
     {
         return $this->quantity;
     }
@@ -59,7 +71,7 @@ class OrderItem
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): float
     {
         return $this->price;
     }

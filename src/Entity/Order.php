@@ -3,13 +3,27 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\CreateOrderAction;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get',
+        'post' => [
+            'controller' => CreateOrderAction::class,
+            'read' => false,
+        ],
+    ],
+    itemOperations: ['get'],
+    denormalizationContext: ['groups' => 'orders:write'],
+    normalizationContext: ['groups' => 'orders:read'],
+    order: ['created' => 'desc'],
+)]
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: 'orders')]
 class Order
@@ -17,9 +31,11 @@ class Order
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['orders:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['orders:read'])]
     private ?\DateTimeInterface $created = null;
 
     #[ORM\OneToMany(
@@ -28,11 +44,13 @@ class Order
         cascade: ['persist', 'remove'],
         orphanRemoval: true
     )]
-    private Collection $orderItems;
+    #[Groups(['orders:read'])]
+    private Collection $items;
 
     public function __construct()
     {
-        $this->orderItems = new ArrayCollection();
+        $this->items = new ArrayCollection();
+        $this->created = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -55,27 +73,27 @@ class Order
     /**
      * @return Collection<int, OrderItem>
      */
-    public function getOrderItems(): Collection
+    public function getItems(): Collection
     {
-        return $this->orderItems;
+        return $this->items;
     }
 
-    public function addOrderItem(OrderItem $orderItem): self
+    public function addItem(OrderItem $item): self
     {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setParent($this);
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setParent($this);
         }
 
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): self
+    public function removeItem(OrderItem $item): self
     {
-        if ($this->orderItems->removeElement($orderItem)) {
+        if ($this->items->removeElement($item)) {
             // set the owning side to null (unless already changed)
-            if ($orderItem->getParent() === $this) {
-                $orderItem->setParent(null);
+            if ($item->getParent() === $this) {
+                $item->setParent(null);
             }
         }
 
