@@ -1,39 +1,54 @@
 version: "3.4"
 
 services:
-    nginx:
-        build:
-            context: .
-            target: nginx
-        volumes:
-            - ./public:/app/public:ro
-        depends_on:
-            - php
-        ports:
-            - "${NGINX_PORT:-80}:80"
-        restart: always
+  nginx:
+    build:
+      context: .
+      target: nginx
+    volumes:
+      - ./public:/app/public:ro
+    depends_on:
+      - php
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    restart: always
 
-    php:
-        build:
-            context: .
-            target: symfony_php
-#        user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
-        environment:
-            COMPOSER_MEMORY_LIMIT: -1
-        volumes:
-            # The "cached" option has no effect on Linux but improves performance on Mac
-            - ./:/app:rw,cached
-            - ./docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
-            - php_socket:/var/run/php
-            - composer:/root/.composer/cache
-            # If you develop on Mac you can remove the var/ directory from the bind-mount
-            # for better performance by enabling the next line
-            - /app/var/cache
-#        depends_on:
-#            - database
-        restart: always
+  php:
+    build:
+      context: .
+      target: symfony_php
+    #        user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    environment:
+      COMPOSER_MEMORY_LIMIT: -1
+    volumes:
+      # The "cached" option has no effect on Linux but improves performance on Mac
+      - ./:/app:rw,cached
+      - ./docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
+      - php_socket:/var/run/php
+      - composer:/root/.composer/cache
+      # If you develop on Mac you can remove the var/ directory from the bind-mount
+      # for better performance by enabling the next line
+      - /app/var/cache
+    depends_on:
+      - database
+    restart: always
+
+  database:
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+    restart: always
 
 volumes:
-    db-data:
-    composer:
-    php_socket:
+  db-data:
+  composer:
+  php_socket:
