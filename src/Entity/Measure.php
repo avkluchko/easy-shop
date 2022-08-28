@@ -16,7 +16,7 @@ class Measure
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 5)]
-    #[Groups(['goods:read'])]
+    #[Groups(['goods:read', 'orders:read', 'order_item:read'])]
     private ?string $name = null;
 
     public function __construct()

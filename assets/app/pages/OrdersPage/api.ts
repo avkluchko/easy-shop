@@ -4,7 +4,7 @@ import { CartItemProps } from '../../interfaces/CartProps';
 
 const fetchUrl = '/api/orders';
 
-export const fetchOrders = async (): Promise<PaginatedResponseProps<OrderProps>> => {
+export const fetchOrders = async (page: number): Promise<PaginatedResponseProps<OrderProps>> => {
     const response = await fetch(fetchUrl);
     const data = await response.json();
 

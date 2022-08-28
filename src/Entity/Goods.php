@@ -36,14 +36,14 @@ class Goods
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: 'id_measure', nullable: false)]
-    #[Groups(['goods:read'])]
+    #[Groups(['goods:read', 'orders:read', 'order_item:read'])]
     private ?Measure $measure = null;
 
     #[ORM\Column(type: 'smallint')]
     private int $hidden = 0;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['goods:read'])]
+    #[Groups(['goods:read', 'orders:read', 'order_item:read'])]
     private string $name;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 3)]
