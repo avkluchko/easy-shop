@@ -57,7 +57,7 @@ export const CartContextProvider: React.FC<Props> = (props) => {
     }
 
     const removeItem = (id: number) => {
-
+        setItems(prevItems => prevItems.filter(item => item.id !== id));
     }
 
     const clearCart = () => {

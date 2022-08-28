@@ -7,6 +7,7 @@ import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
 
 import { useCartContext } from '../CartContext';
+import CartItemAction from './CartItemAction';
 
 const CartItems = () => {
     const { items, totalSum } = useCartContext();
@@ -34,7 +35,7 @@ const CartItems = () => {
                         <TableCell align="right">{item.goods.regprice}</TableCell>
                         <TableCell align="right">{item.price}</TableCell>
                         <TableCell>
-
+                            <CartItemAction item={item} />
                         </TableCell>
                     </TableRow>
                 ))}

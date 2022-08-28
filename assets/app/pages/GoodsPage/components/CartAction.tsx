@@ -12,17 +12,31 @@ type Props = {
 };
 
 const CartAction = ({ goods }: Props) => {
-    const { addItem } = useCartContext();
+    const { items, addItem } = useCartContext();
+
+    const handleAddCart = () => addItem(goods);
+
+    const inCartQuantity = React.useMemo(() => {
+        const inCartItem = items.find(item => item.id === goods.id);
+        return inCartItem ? inCartItem.quantity : 0;
+    }, [items]);
+
+    const canAddToCart = React.useMemo(() => {
+        return inCartQuantity < goods.quantity;
+    }, [inCartQuantity]);
 
     return (
         <React.Fragment>
             <IconButton
                 color="primary"
                 aria-label="add to shopping cart"
-                onClick={() => addItem(goods)}
+                title="Добавить в корзину"
+                onClick={handleAddCart}
+                disabled={!canAddToCart}
             >
                 <AddShoppingCartIcon fontSize="small"/>
             </IconButton>
+            {inCartQuantity > 0 && inCartQuantity}
         </React.Fragment>
     );
 };
