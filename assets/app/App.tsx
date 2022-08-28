@@ -1,35 +1,40 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
+
+import Header from './layout/Header';
+import CartPage from './pages/CartPage';
+import HomePage from './pages/HomePage';
+import OrdersPage from './pages/OrdersPage';
 
 const App = () => {
     return (
-        <Box sx={{ display: 'flex' }}>
-            <AppBar position="absolute">
-                <Toolbar>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                    >
-                        Easy Shop
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Box>
-                        <IconButton size="large" aria-label="items in shopping cart" color="inherit">
-                            <Badge badgeContent={4} color="error">
-                                <ShoppingCart />
-                            </Badge>
-                        </IconButton>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-        </Box>
+        <BrowserRouter>
+            <Box sx={{ display: 'flex' }}>
+                <Header/>
+                <Box
+                    component="main"
+                    sx={{
+                        backgroundColor: (theme) => theme.palette.grey[100],
+                        flexGrow: 1,
+                        height: '100vh',
+                        overflow: 'auto',
+                    }}
+                >
+                    <Toolbar />
+                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                        <Routes>
+                            <Route path="/" element={<HomePage/>}/>
+                            <Route path="/cart" element={<CartPage/>}/>
+                            <Route path="/orders" element={<OrdersPage/>}/>
+                        </Routes>
+                    </Container>
+                </Box>
+            </Box>
+        </BrowserRouter>
     );
 };
 
