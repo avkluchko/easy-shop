@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Component\Order\Dto\CreateOrderDto;
