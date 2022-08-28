@@ -10,9 +10,8 @@ const ListHeader = () => {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <Title>Каталог товаров</Title>
+            <Title>Каталог товаров {totalItems !== undefined && `(всего: ${totalItems})`}</Title>
             <Box sx={{ flexGrow: 1 }}/>
-
         </Box>
     );
 };

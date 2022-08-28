@@ -4,6 +4,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
 import { useGoodsContext } from '../GoodsContext';
+import CartAction from './CartAction';
 
 const GoodsListContent = () => {
     const { goods, isLoading } = useGoodsContext();
@@ -38,6 +39,9 @@ const GoodsListContent = () => {
                     <TableCell align="right">{item.quantity}</TableCell>
                     <TableCell align="center">{item.measure.name}</TableCell>
                     <TableCell align="right">{item.regprice}</TableCell>
+                    <TableCell>
+                        <CartAction goods={item} />
+                    </TableCell>
                 </TableRow>
             ))}
         </React.Fragment>

@@ -3,7 +3,7 @@ import { PaginatedResponseProps } from '../../interfaces/Pagination';
 
 const fetchUrl = '/api/goods';
 
-export const fetchGoods = async (): Promise<PaginatedResponseProps<GoodsProps>> => {
+export const fetchGoods = async (category: number | null, page = 1): Promise<PaginatedResponseProps<GoodsProps>> => {
     const response = await fetch(fetchUrl);
     const data = await response.json();
 
