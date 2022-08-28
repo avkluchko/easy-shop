@@ -7,7 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import Header from './layout/Header';
 import CartPage from './pages/CartPage';
-import HomePage from './pages/HomePage';
+import GoodsPage from './pages/GoodsPage';
 import OrdersPage from './pages/OrdersPage';
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                         <Routes>
-                            <Route path="/" element={<HomePage/>}/>
+                            <Route path="/" element={<GoodsPage/>}/>
                             <Route path="/cart" element={<CartPage/>}/>
                             <Route path="/orders" element={<OrdersPage/>}/>
                         </Routes>
