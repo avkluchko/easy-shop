@@ -14,12 +14,14 @@ class OrderPersister
     ) {
     }
 
-    public function persist(CreateOrderDto $dto): Order
+    public function persist(CreateOrderDto $dto, bool $needFlush = true): Order
     {
         $order = $this->factory->createFromDto($dto);
-
         $this->entityManager->persist($order);
-        $this->entityManager->flush();
+
+        if ($needFlush) {
+            $this->entityManager->flush();
+        }
 
         return $order;
     }

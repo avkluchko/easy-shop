@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Component\Order\Dto\CreateOrderDto;
 use App\Component\Order\OrderPersister;
+use App\Component\Order\OrderProcessor;
 use App\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,8 @@ class CreateOrderAction extends AbstractController
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly ValidatorInterface $validator,
-        private readonly OrderPersister $persister
+        private readonly OrderPersister $persister,
+        private readonly OrderProcessor $processor
     ) {
     }
 
@@ -26,7 +28,10 @@ class CreateOrderAction extends AbstractController
         $dto = $this->getDtoFromRequest($request);
         $this->validator->validate($dto);
 
-        return $this->persister->persist($dto);
+        $order = $this->persister->persist($dto, false);
+        $this->processor->process($order);
+
+        return $order;
     }
 
     private function getDtoFromRequest(Request $request): CreateOrderDto
