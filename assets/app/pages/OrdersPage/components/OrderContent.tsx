@@ -38,16 +38,16 @@ const OrderContent = ({ order }: Props) => {
                         <TableRow key={`goods_${item.id}`}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>{item.goods.name}</TableCell>
-                            <TableCell align="center">{item.quantity} {item.goods.measure.name}</TableCell>
-                            <TableCell align="right">{item.goods.regprice}</TableCell>
+                            <TableCell align="right">{item.quantity} {item.goods.measure.name}</TableCell>
                             <TableCell align="right">{item.price}</TableCell>
+                            <TableCell align="right">{item.sum}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
                 <TableHead>
                     <TableRow>
                         <TableCell colSpan={4} align="right">Сумма</TableCell>
-                        <TableCell align="right"></TableCell>
+                        <TableCell align="right">{order.sum}</TableCell>
                         <TableCell/>
                     </TableRow>
                 </TableHead>

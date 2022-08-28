@@ -36,7 +36,7 @@ class Order
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['orders:read'])]
-    private ?\DateTimeInterface $created = null;
+    private ?\DateTimeInterface $created;
 
     #[ORM\OneToMany(
         mappedBy: 'parent',
@@ -46,6 +46,10 @@ class Order
     )]
     #[Groups(['orders:read'])]
     private Collection $items;
+
+    #[ORM\Column]
+    #[Groups(['orders:read'])]
+    private float $sum;
 
     public function __construct()
     {
@@ -96,6 +100,18 @@ class Order
                 $item->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSum(): float
+    {
+        return $this->sum;
+    }
+
+    public function setSum(float $sum): self
+    {
+        $this->sum = $sum;
 
         return $this;
     }

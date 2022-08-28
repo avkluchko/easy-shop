@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import { CartItemProps } from '../../interfaces/CartProps';
 import { GoodsProps } from '../../interfaces/GoodsProps';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { round2dec } from '../../utils/math';
 
 interface ContextState {
     items: CartItemProps[];
@@ -32,7 +33,9 @@ export const CartContextProvider: React.FC<Props> = (props) => {
     }, [items]);
 
     const totalSum = useMemo(() => {
-        return items.reduce((total, item) => total + (item.quantity * item.goods.regprice), 0);
+        return round2dec(items.reduce((total, item) =>
+            total + (item.quantity * item.goods.regprice), 0));
+
     }, [items]);
 
     const addItem = (goods: GoodsProps) => {
@@ -41,7 +44,7 @@ export const CartContextProvider: React.FC<Props> = (props) => {
             setItems(prevItems => prevItems.map(item => item.id !== goods.id ? item : ({
                 ...item,
                 quantity: item.quantity + 1,
-                price: (item.quantity + 1) * goods.regprice
+                price: round2dec((item.quantity + 1) * goods.regprice)
             })));
         } else {
             setItems(prevItems => ([...prevItems, {

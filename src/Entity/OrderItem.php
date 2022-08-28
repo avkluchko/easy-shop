@@ -32,6 +32,10 @@ class OrderItem
     #[Groups(['orders:read', 'order_item:read'])]
     private float $price;
 
+    #[ORM\Column]
+    #[Groups(['orders:read', 'order_item:read'])]
+    private float $sum;
+
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['order_item:read'])]
@@ -79,6 +83,18 @@ class OrderItem
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getSum(): float
+    {
+        return $this->sum;
+    }
+
+    public function setSum(float $sum): self
+    {
+        $this->sum = $sum;
 
         return $this;
     }

@@ -12,16 +12,22 @@ class OrderFactory
     {
         $order = new Order();
 
+        $sum = 0;
         foreach ($dto->items as $item) {
+            $regprice = $item->goods->getRegprice();
+            $itemSum = $regprice * $item->quantity;
+            $sum += $itemSum;
+
             $order->addItem(
                 (new OrderItem())
                     ->setGoods($item->goods)
                     ->setName($item->goods->getName())
                     ->setQuantity($item->quantity)
-                    ->setPrice($item->goods->getRegprice())
+                    ->setPrice($regprice)
+                    ->setSum($itemSum)
             );
         }
 
-        return $order;
+        return $order->setSum($sum);
     }
 }

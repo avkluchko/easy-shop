@@ -18,6 +18,7 @@ const CartItems = () => {
                     <TableCell>#</TableCell>
                     <TableCell>Наименование</TableCell>
                     <TableCell align="right">Количество</TableCell>
+                    <TableCell align="center">Ед.изм.</TableCell>
                     <TableCell align="right">Цена за единицу</TableCell>
                     <TableCell align="right">Цена</TableCell>
                     <TableCell/>
@@ -28,7 +29,8 @@ const CartItems = () => {
                     <TableRow key={`goods_${item.id}`}>
                         <TableCell>{index + 1}</TableCell>
                         <TableCell>{item.goods.name}</TableCell>
-                        <TableCell align="center">{item.quantity} {item.goods.measure.name}</TableCell>
+                        <TableCell align="right">{item.quantity}</TableCell>
+                        <TableCell align="center">{item.goods.measure.name}</TableCell>
                         <TableCell align="right">{item.goods.regprice}</TableCell>
                         <TableCell align="right">{item.price}</TableCell>
                         <TableCell>
@@ -39,8 +41,7 @@ const CartItems = () => {
             </TableBody>
             <TableHead>
                 <TableRow>
-                    <TableCell colSpan={4} align="right">Итого</TableCell>
-                    <TableCell align="right">{totalSum}</TableCell>
+                    <TableCell colSpan={6} align="right">Итого: {totalSum}</TableCell>
                     <TableCell/>
                 </TableRow>
             </TableHead>
