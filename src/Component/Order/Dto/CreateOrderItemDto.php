@@ -12,15 +12,15 @@ class CreateOrderItemDto
     #[Groups(['orders:write'])]
     public Goods $goods;
 
-    #[Assert\NotBlank]
-    #[Groups(['orders:write'])]
-    public string $name;
-
     #[Assert\NotNull]
     #[Assert\Positive]
     #[Groups(['orders:write'])]
     public float $quantity;
 
+    /**
+     * Цена за единицу - не для сохранения, а для того,
+     * чтобы отловить покупку по изменившейся цене.
+     */
     #[Assert\NotNull]
     #[Assert\PositiveOrZero]
     #[Groups(['orders:write'])]

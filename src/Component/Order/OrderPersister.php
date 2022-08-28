@@ -2,7 +2,6 @@
 
 namespace App\Component\Order;
 
-use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Component\Order\Dto\CreateOrderDto;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;

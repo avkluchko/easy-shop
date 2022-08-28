@@ -1,11 +1,15 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { CartItemProps } from '../../interfaces/CartProps';
 import { GoodsProps } from '../../interfaces/GoodsProps';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 interface ContextState {
-    totalItems: number;
     items: CartItemProps[];
+    totalItems: number;
+    totalSum: number;
     addItem: (item: GoodsProps) => void;
+    removeItem: (id: number) => void;
+    clearCart: () => void;
 }
 
 const CartContext = createContext({} as ContextState);
@@ -15,30 +19,57 @@ type Props = {
 };
 
 export const CartContextProvider: React.FC<Props> = (props) => {
-    const [items, setItems] = useState<CartItemProps[]>([]);
+    const [storedItems, setStoredItems] = useLocalStorage<CartItemProps[]>('cart', []);
+
+    const [items, setItems] = useState<CartItemProps[]>(storedItems);
+
+    useEffect(() => {
+        setStoredItems(items);
+    }, [items]);
 
     const totalItems = useMemo(() => {
         return items.reduce((total, item) => total + item.quantity, 0);
     }, [items]);
 
+    const totalSum = useMemo(() => {
+        return items.reduce((total, item) => total + (item.quantity * item.goods.regprice), 0);
+    }, [items]);
+
     const addItem = (goods: GoodsProps) => {
-        const previouslyAdded = items.find(item => item.goods.id === goods.id);
+        const previouslyAdded = items.find(item => item.id === goods.id);
         if (previouslyAdded) {
-            setItems(prevItems => prevItems.map(item => item.goods.id !== goods.id ? item : ({
+            setItems(prevItems => prevItems.map(item => item.id !== goods.id ? item : ({
                 ...item,
-                quantity: item.quantity + 1
+                quantity: item.quantity + 1,
+                price: (item.quantity + 1) * goods.regprice
             })));
         } else {
-            setItems(prevItems => ([...prevItems, { goods, quantity: 1 }]))
+            setItems(prevItems => ([...prevItems, {
+                id: goods.id,
+                goods,
+                quantity: 1,
+                price: goods.regprice
+            }]))
         }
+    }
+
+    const removeItem = (id: number) => {
+
+    }
+
+    const clearCart = () => {
+        setItems([]);
     }
 
     return (
         <CartContext.Provider
             value={{
-                totalItems,
                 items,
+                totalItems,
+                totalSum,
                 addItem,
+                removeItem,
+                clearCart,
             }}
         >
             {props.children}

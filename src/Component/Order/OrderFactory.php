@@ -16,9 +16,9 @@ class OrderFactory
             $order->addItem(
                 (new OrderItem())
                     ->setGoods($item->goods)
-                    ->setName($item->name)
+                    ->setName($item->goods->getName())
                     ->setQuantity($item->quantity)
-                    ->setPrice($item->price)
+                    ->setPrice($item->goods->getRegprice())
             );
         }
 

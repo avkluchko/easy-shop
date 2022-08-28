@@ -5,6 +5,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import GoodsListContent from './GoodsListContent';
 
@@ -19,6 +20,9 @@ const GoodsList = () => {
                     <TableCell align="right">Остаток</TableCell>
                     <TableCell align="center">Ед.изм</TableCell>
                     <TableCell align="right">Цена</TableCell>
+                    <TableCell align="center">
+                        <ShoppingCartIcon color="inherit" fontSize="small" />
+                    </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

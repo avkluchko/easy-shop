@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
 import Title from '../../components/Title';
+import CartContent from './components/CartContent';
 
 const CartPage = () => {
     return (
@@ -11,6 +12,7 @@ const CartPage = () => {
             <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <Title>Корзина</Title>
+                    <CartContent />
                 </Paper>
             </Grid>
         </Grid>

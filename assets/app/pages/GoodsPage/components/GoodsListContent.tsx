@@ -12,7 +12,7 @@ const GoodsListContent = () => {
     if (isLoading) {
         return (
             <TableRow>
-                <TableCell colSpan={6}>
+                <TableCell colSpan={7}>
                     Загрузка...
                 </TableCell>
             </TableRow>
@@ -22,7 +22,7 @@ const GoodsListContent = () => {
     if (!goods || goods.length === 0) {
         return (
             <TableRow>
-                <TableCell colSpan={6}>
+                <TableCell colSpan={7}>
                     Товаров нет.
                 </TableCell>
             </TableRow>
