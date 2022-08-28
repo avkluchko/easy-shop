@@ -1,10 +1,10 @@
-import { PaginatedResponseProps } from '../../interfaces/Pagination';
-import { OrderProps } from '../../interfaces/OrderProps';
-import { CartItemProps } from '../../interfaces/CartProps';
+import { PaginatedResponseProps } from '../../interfaces/pagination';
+import { Orders } from '../../interfaces/orders';
+import { CartItemProps } from '../../interfaces/cart';
 
 const fetchUrl = '/api/orders';
 
-export const fetchOrders = async (page: number): Promise<PaginatedResponseProps<OrderProps>> => {
+export const fetchOrders = async (page: number): Promise<PaginatedResponseProps<Orders>> => {
     const response = await fetch(fetchUrl);
     const data = await response.json();
 

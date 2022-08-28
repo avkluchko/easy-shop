@@ -1,4 +1,4 @@
-export interface GoodsProps {
+export interface Goods {
     id: number;
     catalog: CatalogProps;
     measure: MeasureProps;

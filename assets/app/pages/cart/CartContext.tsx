@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { CartItemProps } from '../../interfaces/CartProps';
-import { GoodsProps } from '../../interfaces/GoodsProps';
+import { CartItemProps } from '../../interfaces/cart';
+import { Goods } from '../../interfaces/goods';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { round2dec } from '../../utils/math';
 
@@ -8,7 +8,7 @@ interface ContextState {
     items: CartItemProps[];
     totalItems: number;
     totalSum: number;
-    addItem: (item: GoodsProps) => void;
+    addItem: (item: Goods) => void;
     removeItem: (id: number) => void;
     clearCart: () => void;
 }
@@ -38,7 +38,7 @@ export const CartContextProvider: React.FC<Props> = (props) => {
 
     }, [items]);
 
-    const addItem = (goods: GoodsProps) => {
+    const addItem = (goods: Goods) => {
         const previouslyAdded = items.find(item => item.id === goods.id);
         if (previouslyAdded) {
             setItems(prevItems => prevItems.map(item => item.id !== goods.id ? item : ({

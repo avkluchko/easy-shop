@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 
-import { useCartContext } from '../pages/CartPage/CartContext';
+import { useCartContext } from '../pages/cart/CartContext';
 
 const Header = () => {
     const { totalItems } = useCartContext();

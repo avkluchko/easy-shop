@@ -1,6 +1,6 @@
-import { GoodsProps } from './GoodsProps';
+import { Goods } from './goods';
 
-export interface OrderProps {
+export interface Orders {
     id: number;
     created: string;
     items: OrderItemProps[];
@@ -9,7 +9,7 @@ export interface OrderProps {
 
 export interface OrderItemProps {
     id: number;
-    goods: GoodsProps;
+    goods: Goods;
     quantity: number;
     price: number;
     sum: number;

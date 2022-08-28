@@ -39,7 +39,7 @@ const GoodsListContent = () => {
                     <TableCell align="right">{item.quantity}</TableCell>
                     <TableCell align="center">{item.measure.name}</TableCell>
                     <TableCell align="right">{item.regprice}</TableCell>
-                    <TableCell>
+                    <TableCell align="center">
                         <CartAction goods={item} />
                     </TableCell>
                 </TableRow>

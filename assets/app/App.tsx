@@ -6,10 +6,10 @@ import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 
 import Header from './layout/Header';
-import CartPage from './pages/CartPage';
-import GoodsPage from './pages/GoodsPage';
-import OrdersPage from './pages/OrdersPage';
-import { CartContextProvider } from './pages/CartPage/CartContext';
+import CartPage from './pages/cart/CartPage';
+import GoodsPage from './pages/goods/GoodsPage';
+import OrdersPage from './pages/orders/OrdersPage';
+import { CartContextProvider } from './pages/cart/CartContext';
 
 const App = () => {
     return (

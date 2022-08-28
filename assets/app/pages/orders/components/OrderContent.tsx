@@ -7,11 +7,11 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import Table from '@mui/material/Table';
 
-import { OrderProps } from '../../../interfaces/OrderProps';
+import { Orders } from '../../../interfaces/orders';
 import Title from '../../../components/Title';
 
 type Props = {
-    order: OrderProps;
+    order: Orders;
 }
 
 const OrderContent = ({ order }: Props) => {

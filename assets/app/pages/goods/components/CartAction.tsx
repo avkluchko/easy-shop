@@ -4,11 +4,11 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
-import { GoodsProps } from '../../../interfaces/GoodsProps';
-import { useCartContext } from '../../CartPage/CartContext';
+import { Goods } from '../../../interfaces/goods';
+import { useCartContext } from '../../cart/CartContext';
 
 type Props = {
-    goods: GoodsProps;
+    goods: Goods;
 };
 
 const CartAction = ({ goods }: Props) => {

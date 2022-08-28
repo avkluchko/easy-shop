@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 
 import { useCartContext } from '../CartContext';
-import {processOrder} from '../../OrdersPage/api';
+import {processOrder} from '../../orders/api';
 import CartItems from './CartItems';
 
 const CartContent = () => {

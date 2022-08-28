@@ -10,9 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    collectionOperations: [
-        'get'
-    ],
+    collectionOperations: ['get'],
     itemOperations: ['get'],
     normalizationContext: ['groups' => 'goods:read'],
 )]

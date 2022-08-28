@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { GoodsProps } from '../../interfaces/GoodsProps';
+import { Goods } from '../../interfaces/goods';
 import { fetchGoods } from './api';
-import { PaginatedResponseProps } from '../../interfaces/Pagination';
+import { PaginatedResponseProps } from '../../interfaces/pagination';
 
 interface ContextState {
-    category: number | null;
+    category?: string;
+    changeCategory: (category: string) => void;
     page: number;
-    goods: GoodsProps[],
+    goods: Goods[],
     totalItems: number;
     isLoading: boolean;
 }
@@ -20,15 +21,15 @@ type Props = {
 };
 
 export const GoodsContextProvider: React.FC<Props> = (props) => {
-    const [goods, setGoods] = useState<GoodsProps[]>([]);
+    const [goods, setGoods] = useState<Goods[]>([]);
 
-    const [category, setCategory] = useState<number | null>(null);
+    const [category, setCategory] = useState<string | undefined>();
 
     const [page, setPage] = useState(1);
 
     const [totalItems, setTotalItems] = useState(0);
 
-    const { data, isLoading } = useQuery<PaginatedResponseProps<GoodsProps>>(
+    const { data, isLoading } = useQuery<PaginatedResponseProps<Goods>>(
         [category, page],
         () => fetchGoods(category, page)
     );
@@ -54,6 +55,7 @@ export const GoodsContextProvider: React.FC<Props> = (props) => {
         <GoodsContext.Provider
             value={{
                 category,
+                changeCategory: setCategory,
                 page,
                 goods,
                 totalItems,

@@ -3,7 +3,7 @@ import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
-import { CartItemProps } from '../../../interfaces/CartProps';
+import { CartItemProps } from '../../../interfaces/cart';
 import { useCartContext } from '../CartContext';
 
 type Props = {

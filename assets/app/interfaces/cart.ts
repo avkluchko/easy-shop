@@ -1,8 +1,8 @@
-import { GoodsProps } from './GoodsProps';
+import { Goods } from './goods';
 
 export interface CartItemProps {
     id: number;
-    goods: GoodsProps;
+    goods: Goods;
     quantity: number;
     price: number;
 }

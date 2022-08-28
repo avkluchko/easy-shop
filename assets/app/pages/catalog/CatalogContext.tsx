@@ -1,30 +1,28 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { OrderProps } from '../../interfaces/OrderProps';
-import { fetchOrders } from './api';
+import { CatalogProps } from '../../interfaces/goods';
+import { PaginatedResponseProps } from '../../interfaces/pagination';
+import { fetchCatalogs } from './api';
 
 interface ContextState {
-    page: number;
-    orders: OrderProps[],
+    catalogs: CatalogProps[],
     totalItems: number;
     isLoading: boolean;
 }
 
-const OrdersContext = createContext({} as ContextState);
+const CatalogContext = createContext({} as ContextState);
 
 type Props = {
     children?: React.ReactNode;
 };
 
-export const OrdersContextProvider: React.FC<Props> = (props) => {
-    const [orders, setOrders] = useState<OrderProps[]>([]);
-
-    const [page, setPage] = useState(1);
+export const CatalogContextProvider: React.FC<Props> = (props) => {
+    const [catalogs, setCatalogs] = useState<CatalogProps[]>([]);
 
     const [totalItems, setTotalItems] = useState(0);
 
-    const { data, isLoading } = useQuery([page], () => fetchOrders(page));
+    const { data, isLoading } = useQuery<PaginatedResponseProps<CatalogProps>>('initial', fetchCatalogs);
 
     useEffect(() => {
         let mounted = true;
@@ -35,7 +33,7 @@ export const OrdersContextProvider: React.FC<Props> = (props) => {
 
         if (mounted) {
             setTotalItems(data.totalItems);
-            setOrders(data.items);
+            setCatalogs(data.items);
         }
 
         return () => {
@@ -44,19 +42,18 @@ export const OrdersContextProvider: React.FC<Props> = (props) => {
     }, [data]);
 
     return (
-        <OrdersContext.Provider
+        <CatalogContext.Provider
             value={{
-                page,
-                orders,
+                catalogs,
                 totalItems,
                 isLoading,
             }}
         >
             {props.children}
-        </OrdersContext.Provider>
+        </CatalogContext.Provider>
     );
 };
 
-export const useOrdersContext = () => {
-    return useContext(OrdersContext);
+export const useCatalogContext = () => {
+    return useContext(CatalogContext);
 };
