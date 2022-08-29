@@ -42,4 +42,9 @@ docker-compose up -d
 docker-compose --env-file=.env.local up -d 
 ```
 
+После запуска необходимо выполнить миграцию БД:
+
+```bash
+docker-compose exec php bin/console doctrine:migrations:migrate --no-interaction
+```
 
